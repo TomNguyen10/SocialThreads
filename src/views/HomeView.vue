@@ -1,9 +1,12 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <Thread />
 </template>
+
+<script>
+import Thread from "../components/Thread.vue";
+export default {
+  components: {
+    Thread,
+  },
+};
+</script>

@@ -1,12 +1,12 @@
 <template>
-  <News />
+  <Football />
 </template>
 
 <script>
-import News from "../components/News.vue";
+import Football from "../components/Football.vue";
 export default {
   components: {
-    News,
+    Football,
   },
 };
 </script>

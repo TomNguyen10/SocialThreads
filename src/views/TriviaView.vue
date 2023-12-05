@@ -1,12 +1,12 @@
 <template>
-  <News />
+  <Trivia />
 </template>
 
 <script>
-import News from "../components/News.vue";
+import Trivia from "../components/Trivia.vue";
 export default {
   components: {
-    News,
+    Trivia,
   },
 };
 </script>

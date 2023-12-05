@@ -14,6 +14,26 @@ const router = createRouter({
       name: "about",
       component: () => import("../views/AboutView.vue"),
     },
+    {
+      path: "/dadjoke",
+      name: "dadjoke",
+      component: () => import("../views/DadJokeview.vue"),
+    },
+    {
+      path: "/football",
+      name: "football",
+      component: () => import("../views/FootballView.vue"),
+    },
+    {
+      path: "/anime",
+      name: "anime",
+      component: () => import("../views/AnimeView.vue"),
+    },
+    {
+      path: "/trivia",
+      name: "trivia",
+      component: () => import("../views/TriviaView.vue"),
+    },
   ],
 });
 

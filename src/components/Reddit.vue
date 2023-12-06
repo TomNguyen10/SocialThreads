@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <h1>Top Threads in r/programming</h1>
+    <div class="search-bar">
+      <input v-model="customSubreddit" placeholder="Enter custom subreddit" />
+      <button @click="fetchCustomThreads">Search</button>
+      <button @click="fetchTopThreads">Top Threads</button>
+    </div>
+
+    <h1 v-if="!loading && threads.length > 0">
+      Top Threads in r/{{ subreddit }}
+    </h1>
+
     <ul v-if="threads.length > 0">
       <li v-for="thread in threads" :key="thread.id">
         <strong>{{ thread.title }}</strong> by {{ thread.author }} (
@@ -12,30 +21,34 @@
         <hr />
       </li>
     </ul>
-    <div v-else>
+
+    <div v-else-if="loading">
       <p>Loading...</p>
+    </div>
+
+    <div v-else>
+      <p>No threads found</p>
     </div>
   </div>
 </template>
 
 <script>
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import db from "./Firebase/init";
+
 export default {
   data() {
     return {
       threads: [],
       subreddit: "programming",
       loading: true,
+      customSubreddit: "",
     };
   },
-  mounted() {
-    this.fetchRedditThreads();
-  },
   methods: {
-    async fetchRedditThreads() {
+    async fetchRedditThreads(url) {
       try {
-        const response = await fetch(
-          `https://www.reddit.com/r/${this.subreddit}/top.json?sort=top&t=day&limit=30`
-        );
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.data && data.data.children.length > 0) {
@@ -50,6 +63,52 @@ export default {
         this.loading = false;
       }
     },
+    async checkSubredditInDatabase(subreddit) {
+      const q = query(
+        collection(db, "subreddits"),
+        where("subreddit", "==", subreddit)
+      );
+      const querySnapshot = await getDocs(q);
+      return !querySnapshot.empty;
+    },
+    async addSubredditToDatabase(subreddit) {
+      const collectionRef = collection(db, "subreddits");
+      const data = {
+        subreddit: subreddit,
+      };
+      await addDoc(collectionRef, data);
+    },
+    async fetchCustomThreads() {
+      const customUrl = `https://www.reddit.com/r/${this.customSubreddit}/top.json?sort=top&t=day&limit=30`;
+      const subredditExists = await this.checkSubredditInDatabase(
+        this.customSubreddit
+      );
+      if (!subredditExists) {
+        await this.addSubredditToDatabase(this.customSubreddit);
+      }
+      this.subreddit = this.customSubreddit;
+      this.fetchRedditThreads(customUrl);
+    },
+    fetchTopThreads() {
+      this.subreddit = "programming";
+      const topThreadsUrl = `https://www.reddit.com/r/${this.subreddit}/top.json?sort=top&t=day&limit=30`;
+      this.fetchRedditThreads(topThreadsUrl);
+    },
+  },
+  mounted() {
+    const defaultUrl = `https://www.reddit.com/r/${this.subreddit}/top.json?sort=top&t=day&limit=30`;
+    this.fetchRedditThreads(defaultUrl);
   },
 };
 </script>
+
+<style scoped>
+/* Add any styling as needed */
+.search-bar {
+  margin-bottom: 10px;
+}
+
+.search-bar button {
+  margin-left: 10px;
+}
+</style>

@@ -1,12 +1,12 @@
 <template>
-  <Football />
+  <History />
 </template>
 
 <script>
-import Football from "../components/Football.vue";
+import History from "../components/History.vue";
 export default {
   components: {
-    Football,
+    History,
   },
 };
 </script>

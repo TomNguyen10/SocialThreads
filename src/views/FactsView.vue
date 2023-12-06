@@ -1,12 +1,12 @@
 <template>
-  <Anime />
+  <Facts />
 </template>
 
 <script>
-import Anime from "../components/Anime.vue";
+import Facts from "../components/Facts.vue";
 export default {
   components: {
-    Anime,
+    Facts,
   },
 };
 </script>

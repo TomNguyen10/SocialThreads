@@ -8,7 +8,8 @@
           {{ option }}
         </li>
       </ul>
-      <button @click="fetchNewQuestion">Get Another Question</button>
+      <button @click="revealAnswer">Reveal Answer</button>
+      <p v-if="answerRevealed">Correct Answer: {{ question.correctAnswer }}</p>
     </div>
     <div v-else>
       <p v-if="loading">Loading...</p>
@@ -23,6 +24,7 @@ export default {
     return {
       question: null,
       loading: true,
+      answerRevealed: false,
     };
   },
   mounted() {
@@ -31,6 +33,7 @@ export default {
   methods: {
     async fetchNewQuestion() {
       this.loading = true;
+      this.answerRevealed = false;
 
       try {
         const response = await fetch(
@@ -39,13 +42,13 @@ export default {
         const data = await response.json();
 
         if (data.results && data.results.length > 0) {
-          // Assuming the first question in the response
           this.question = {
             question: data.results[0].question,
             options: [
               data.results[0].correct_answer,
               ...data.results[0].incorrect_answers,
             ],
+            correctAnswer: data.results[0].correct_answer,
           };
           console.log("Fetched Question:", this.question);
         } else {
@@ -57,6 +60,11 @@ export default {
         this.loading = false;
       }
     },
+    revealAnswer() {
+      this.answerRevealed = true;
+    },
   },
 };
 </script>
+
+<style></style>

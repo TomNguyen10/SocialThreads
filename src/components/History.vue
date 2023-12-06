@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="centered-container">
     <h2>On this day in the past</h2>
     <div v-if="events.length > 0">
-      <ul>
-        <li v-for="(event, index) in events" :key="index">
-          {{ event.year }}: {{ event.event }}
+      <ul class="events-list">
+        <li v-for="(event, index) in events" :key="index" class="event-item">
+          {{ event.year }} : {{ event.event }}
         </li>
       </ul>
     </div>
-    <div v-else>
+    <div v-else class="no-events">
       <p>No historical events found.</p>
     </div>
   </div>
@@ -56,6 +56,39 @@ export default {
 };
 </script>
 
-<style>
-/* Add any styling as needed */
+<style scoped>
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.events-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.event-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.event-year {
+  color: #007bff;
+}
+
+.event-text {
+  color: #333;
+}
+
+.no-events {
+  text-align: center;
+  margin-top: 20px;
+}
 </style>

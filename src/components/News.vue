@@ -42,10 +42,12 @@
           <li v-for="(item, index) in readLaterItems" :key="index">
             <strong>{{ item.title }}</strong> - {{ item.author }} -
             <a :href="item.url" target="_blank">Link</a>
-            <button @click="removeFromReadLater(index)">Remove</button>
+            <div><button @click="removeFromReadLater(index)">X</button></div>
           </li>
         </ul>
-        <button @click="clearReadLater">Clear All</button>
+        <div v-if="readLaterItems.length > 0">
+          <button @click="clearReadLater">Clear All</button>
+        </div>
       </div>
     </div>
   </div>
@@ -146,36 +148,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-content {
-  flex: 2;
-}
-
-.read-later-section {
-  flex: 1;
-}
-
-.topic-list {
-  margin-bottom: 10px;
-}
-
-.topic-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.topic-list li {
-  cursor: pointer;
-  margin-bottom: 5px;
-  color: blue;
-}
-
-.topic-list li:hover {
-  text-decoration: underline;
-}
-</style>
+<style src="../assets/news.css" scoped></style>

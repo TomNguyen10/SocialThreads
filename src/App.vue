@@ -2,6 +2,9 @@
   <header>
     <div class="wrapper">
       <nav>
+        <div class="logo-container">
+          <img :src="logoImage" alt="Left Logo" class="logo" />
+        </div>
         <router-link to="/">
           <button class="nav-button">News</button>
         </router-link>
@@ -23,6 +26,9 @@
         <router-link to="/chuck">
           <button class="nav-button">Chuck</button>
         </router-link>
+        <div class="logo-container">
+          <img :src="reddit" alt="Right Logo" class="logo" />
+        </div>
       </nav>
     </div>
   </header>
@@ -32,6 +38,16 @@
 
 <script>
 import { RouterLink, RouterView } from "vue-router";
+import logoImage from "../public/socialThreadLogo.jpg";
+import reddit from "../public/reddit.jpeg";
+export default {
+  data() {
+    return {
+      logoImage,
+      reddit,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -75,5 +91,14 @@ nav {
   .nav-button {
     margin-bottom: 10px;
   }
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-height: 30px;
+  margin-right: 10px;
 }
 </style>

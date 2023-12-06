@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="centered-container">
     <h2>Facts</h2>
-    <ul v-if="facts.length > 0">
-      <li v-for="(fact, index) in facts" :key="index" style="color: black">
+    <ul v-if="facts.length > 0" class="facts-list">
+      <li v-for="(fact, index) in facts" :key="index" class="fact-item">
         {{ fact.fact }}
       </li>
     </ul>
-    <div v-else>
+    <div v-else class="no-facts">
       <p>No facts available.</p>
     </div>
 
-    <button @click="getMoreFacts">Get More Facts</button>
+    <button @click="getMoreFacts" class="more-facts-button">
+      Get More Facts
+    </button>
   </div>
 </template>
 
@@ -58,6 +60,44 @@ export default {
 };
 </script>
 
-<style>
-/* Add any styling as needed */
+<style scoped>
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.facts-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.fact-item {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.no-facts {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.more-facts-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.more-facts-button:hover {
+  background-color: #0056b3;
+}
 </style>

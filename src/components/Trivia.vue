@@ -1,23 +1,29 @@
 <template>
-  <div id="trivia-app">
+  <div id="trivia-app" class="centered-container">
     <h1>Trivia Question of the Day</h1>
-    <div v-if="question">
-      <p>{{ question.question }}</p>
-      <ul>
-        <li v-for="(option, index) in question.options" :key="index">
+    <div v-if="question" class="trivia-container">
+      <p class="question-text">{{ question.question }}</p>
+      <ul class="options-list">
+        <li
+          v-for="(option, index) in question.options"
+          :key="index"
+          class="option-item">
           {{ option }}
         </li>
       </ul>
-      <button @click="revealAnswer">Reveal Answer</button>
-      <p v-if="answerRevealed">Correct Answer: {{ question.correctAnswer }}</p>
+      <button @click="revealAnswer" class="reveal-button">Reveal Answer</button>
+      <p v-if="answerRevealed" class="correct-answer">
+        Correct Answer: {{ question.correctAnswer }}
+      </p>
     </div>
-    <div v-else>
+    <div v-else class="no-question">
       <p v-if="loading">Loading...</p>
       <p v-else>No question found.</p>
     </div>
 
-    <!-- New button to get another trivia -->
-    <button @click="getAnotherTrivia">Get Another Trivia</button>
+    <button @click="getAnotherTrivia" class="get-another-button">
+      Get Another Trivia
+    </button>
   </div>
 </template>
 
@@ -81,4 +87,84 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.trivia-container {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.question-text {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.options-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.option-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option-item:hover {
+  background-color: #f0f0f0;
+}
+
+.reveal-button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reveal-button:hover {
+  background-color: #0056b3;
+}
+
+.correct-answer {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.no-question {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.get-another-button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.get-another-button:hover {
+  background-color: #218838;
+}
+</style>

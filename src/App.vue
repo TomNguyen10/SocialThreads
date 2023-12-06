@@ -20,6 +20,9 @@
         <router-link to="/trivia">
           <button class="nav-button">Trivia</button>
         </router-link>
+        <router-link to="/chuck">
+          <button class="nav-button">Chuck</button>
+        </router-link>
       </nav>
     </div>
   </header>

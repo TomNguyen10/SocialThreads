@@ -15,6 +15,9 @@
       <p v-if="loading">Loading...</p>
       <p v-else>No question found.</p>
     </div>
+
+    <!-- New button to get another trivia -->
+    <button @click="getAnotherTrivia">Get Another Trivia</button>
   </div>
 </template>
 
@@ -39,20 +42,27 @@ export default {
         const response = await fetch(
           "https://opentdb.com/api.php?amount=1&type=multiple"
         );
-        const data = await response.json();
 
-        if (data.results && data.results.length > 0) {
-          this.question = {
-            question: data.results[0].question,
-            options: [
-              data.results[0].correct_answer,
-              ...data.results[0].incorrect_answers,
-            ],
-            correctAnswer: data.results[0].correct_answer,
-          };
-          console.log("Fetched Question:", this.question);
+        if (response.status === 429) {
+          console.warn(
+            "Rate limit exceeded. Please wait before fetching another question."
+          );
         } else {
-          console.warn("No question found");
+          const data = await response.json();
+
+          if (data.results && data.results.length > 0) {
+            this.question = {
+              question: data.results[0].question,
+              options: [
+                data.results[0].correct_answer,
+                ...data.results[0].incorrect_answers,
+              ],
+              correctAnswer: data.results[0].correct_answer,
+            };
+            console.log("Fetched Question:", this.question);
+          } else {
+            console.warn("No question found");
+          }
         }
       } catch (error) {
         console.error("Error fetching Question:", error);
@@ -60,8 +70,12 @@ export default {
         this.loading = false;
       }
     },
+
     revealAnswer() {
       this.answerRevealed = true;
+    },
+    async getAnotherTrivia() {
+      await this.fetchNewQuestion();
     },
   },
 };

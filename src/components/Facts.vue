@@ -9,6 +9,8 @@
     <div v-else>
       <p>No facts available.</p>
     </div>
+
+    <button @click="getMoreFacts">Get More Facts</button>
   </div>
 </template>
 
@@ -47,6 +49,10 @@ export default {
       } catch (error) {
         console.error("Error fetching facts:", error);
       }
+    },
+
+    async getMoreFacts() {
+      await this.fetchFacts();
     },
   },
 };

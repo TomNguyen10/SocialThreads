@@ -122,7 +122,7 @@ export default {
       );
       if (!subredditExists) {
         await this.addSubredditToDatabase(this.customSubreddit);
-        this.subreddits.push(this.customSubreddit);
+        this.subreddits.unshift(this.customSubreddit);
       }
       this.subreddit = this.customSubreddit;
       this.fetchRedditThreads(customUrl);

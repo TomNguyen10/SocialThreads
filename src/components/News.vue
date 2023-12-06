@@ -101,7 +101,7 @@ export default {
       const topicExists = await this.checkTopicInDatabase(this.customTopic);
       if (!topicExists) {
         await this.addTopicToDatabase(this.customTopic);
-        this.topics.push(this.customTopic);
+        this.topics.unshift(this.customTopic);
       }
       this.fetchNews(customUrl);
     },
@@ -172,7 +172,7 @@ export default {
 .topic-list li {
   cursor: pointer;
   margin-bottom: 5px;
-  color: blue; /* Add styling as needed */
+  color: blue;
 }
 
 .topic-list li:hover {
